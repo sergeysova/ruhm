@@ -290,13 +290,13 @@ ES5 {
                | stringLiteral
                | numericLiteral
 
-  PathList = ListOf<identifier, "::">
+  PathList = NonemptyListOf<identifier, "::">
 
   PathExpression
-    = ListOf<super, "::"> "::" PathList -- super
+    = "::" PathList -- current
     | self "::" PathList -- self
-    | "::" PathList -- current
-    | PathList -- simple
+    | ListOf<super, "::"> "::" PathList -- super
+    | PathList -- long
 
   MemberExpression
     = MemberExpression "[" Expression<withIn> "]"  -- arrayRefExp
