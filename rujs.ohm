@@ -408,6 +408,7 @@ ES5 {
     | DebuggerStatement
     | StructStatement
     | ExternStatement
+    | UseStatement
 
   Block = "{" StatementList "}"
 
@@ -490,7 +491,7 @@ ES5 {
 
   FormalParameter = identifier
 
-  UseStatement = use sc
+  UseStatement = use PathExpression sc
 
   /*
     Note: The Directive Prologue is the longest sequence of ExpressionStatement
