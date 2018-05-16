@@ -277,8 +277,13 @@ ES5 {
                | stringLiteral
                | numericLiteral
 
+  PathList = ListOf<identifierName, "::">
+
   PathExpression
-    = ListOf<identifierName, "::">
+    = super "::" PathList -- super
+    | self "::" PathList -- self
+    | "::" PathList -- current
+    | PathList -- simple
 
   MemberExpression
     = MemberExpression "[" Expression<withIn> "]"  -- arrayRefExp
