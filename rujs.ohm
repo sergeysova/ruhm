@@ -278,15 +278,17 @@ ES5 {
                | numericLiteral
 
   PathExpression
-    = identifierName "::" identifierName
+    = ListOf<identifierName, "::">
 
   MemberExpression
-    = PathExpression
-    | MemberExpression "[" Expression<withIn> "]"  -- arrayRefExp
+    = MemberExpression "[" Expression<withIn> "]"  -- arrayRefExp
     | MemberExpression "." identifierName  -- propRefExp
     | new MemberExpression Arguments       -- newExp
     | FunctionExpression
     | PrimaryExpression
+    | "::" PathExpression -- super
+    | "::" PathExpression "::" MemberExpression -- superpost
+    | PathExpression "::" MemberExpression -- post
 
   NewExpression = MemberExpression
                 | new NewExpression -- newExp
@@ -347,7 +349,7 @@ ES5 {
     | RelationalExpression<guardIn>
 
   BitwiseANDExpression<guardIn>
-    = BitwiseANDExpression<guardIn> "&" EqualityExpression<guardIn> -- band
+    = BitwiseANDExpression<guardIn> "&" EqualityExpression<guardIn> -- banda
     | EqualityExpression<guardIn>
 
   BitwiseXORExpression<guardIn>
