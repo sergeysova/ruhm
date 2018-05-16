@@ -277,11 +277,16 @@ ES5 {
                | stringLiteral
                | numericLiteral
 
-  MemberExpression = MemberExpression "[" Expression<withIn> "]"  -- arrayRefExp
-                   | MemberExpression "." identifierName  -- propRefExp
-                   | new MemberExpression Arguments       -- newExp
-                   | FunctionExpression
-                   | PrimaryExpression
+  PathExpression
+    = identifierName "::" identifierName
+
+  MemberExpression
+    = PathExpression
+    | MemberExpression "[" Expression<withIn> "]"  -- arrayRefExp
+    | MemberExpression "." identifierName  -- propRefExp
+    | new MemberExpression Arguments       -- newExp
+    | FunctionExpression
+    | PrimaryExpression
 
   NewExpression = MemberExpression
                 | new NewExpression -- newExp
@@ -457,10 +462,10 @@ ES5 {
 
   Finally = finally Block
 
-  StructStatement = struct identifier "{" "}"
+  StructStatement = struct identifierName "{" "}"
 
   ExternStatement
-    = extern package identifier sc
+    = extern package identifierName sc
     | extern package stringLiteral sc
 
   DebuggerStatement = #(debugger sc)
@@ -477,6 +482,8 @@ ES5 {
   FormalParameterList = ListOf<FormalParameter, ",">
 
   FormalParameter = identifier
+
+  UseStatement = use sc
 
   /*
     Note: The Directive Prologue is the longest sequence of ExpressionStatement
