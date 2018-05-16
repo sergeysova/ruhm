@@ -290,29 +290,25 @@ ES5 {
                | stringLiteral
                | numericLiteral
 
-  PathList = NonemptyListOf<identifier, "::">
-
   PathExpression
-    = "::" PathList -- current
-    | self "::" PathList -- self
-    | ListOf<super, "::"> "::" PathList -- super
-    | PathList -- long
+    = PathExpression "::" identifier -- recursive
+    | "::" identifier -- current
+    | super "::" identifier -- super
+    | identifier "::" identifier -- simple
 
   MemberExpression
     = MemberExpression "[" Expression<withIn> "]"  -- arrayRefExp
-    | MemberExpression "." identifierName  -- propRefExp
-    | new MemberExpression Arguments       -- newExp
+    | MemberExpression "." identifierName -- property
+    | new MemberExpression Arguments -- newExp
     | FunctionExpression
     | PrimaryExpression
-    | "::" PathExpression -- super
-    | "::" PathExpression "::" MemberExpression -- superpost
-    | PathExpression "::" MemberExpression -- post
 
   NewExpression = MemberExpression
                 | new NewExpression -- newExp
 
   CallExpression = CallExpression "[" Expression<withIn> "]"  -- arrayRefExp
                  | CallExpression "." identifierName  -- propRefExp
+                 | PathExpression Arguments                 -- pathExpExp
                  | CallExpression Arguments           -- callExpExp
                  | MemberExpression Arguments         -- memberExpExp
 
