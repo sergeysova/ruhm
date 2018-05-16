@@ -9,3 +9,9 @@ use foo::{d};
 use foo::{bar as baz};
 
 struct Foo {}
+
+
+foo::bar()
+foo::bar::baz()
+::bar::baz()
+super::foo()

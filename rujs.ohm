@@ -293,7 +293,7 @@ ES5 {
   PathExpression
     = PathExpression "::" identifier -- recursive
     | "::" identifier -- current
-    | super "::" identifier -- super
+    | super "::" (super "::")* identifier -- super
     | identifier "::" identifier -- simple
 
   MemberExpression
@@ -507,10 +507,13 @@ ES5 {
   UseDestructuring
     = "{" ListOf<UseDestructedName, ","> "}"
 
+  UsePath
+    = PathExpression | identifier
+
   UseStatement
-    = use PathExpression "::" "*" sc -- all
-    | use PathExpression "::" UseDestructuring sc -- named
-    | use PathExpression sc -- base
+    = use UsePath "::" "*" sc -- all
+    | use UsePath "::" UseDestructuring sc -- named
+    | use UsePath sc -- base
 
   /*
     Note: The Directive Prologue is the longest sequence of ExpressionStatement
