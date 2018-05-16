@@ -67,6 +67,19 @@ ES5 {
           | debugger | function  | this       | with
           | default  | if        | throw
           | delete   | in        | try
+          | as
+          | extern
+          | fn
+          | impl
+          | match
+          | mod
+          | mut
+          | pub
+          | self
+          | struct
+          | trait
+          | type
+          | use
 
   futureReservedWordLax = class  | enum  | extends
                         | super  | const | export
@@ -277,10 +290,10 @@ ES5 {
                | stringLiteral
                | numericLiteral
 
-  PathList = ListOf<identifierName, "::">
+  PathList = ListOf<identifier, "::">
 
   PathExpression
-    = super "::" PathList -- super
+    = ListOf<super, "::"> "::" PathList -- super
     | self "::" PathList -- self
     | "::" PathList -- current
     | PathList -- simple
@@ -491,7 +504,17 @@ ES5 {
 
   FormalParameter = identifier
 
-  UseStatement = use PathExpression sc
+  UseDestructedName
+    = identifier as identifier -- rename
+    | identifier
+
+  UseDestructuring
+    = "{" ListOf<UseDestructedName, ","> "}"
+
+  UseStatement
+    = use PathExpression "::" "*" sc -- all
+    | use PathExpression "::" UseDestructuring sc -- named
+    | use PathExpression sc -- base
 
   /*
     Note: The Directive Prologue is the longest sequence of ExpressionStatement
