@@ -525,7 +525,12 @@ Base {
 
   TypeDefinition
     = IdentifierPath "<" ListOf<TypeDefinition, ","> ">" -- generic
+    | TupleDefinition -- tuple
     | IdentifierPath
+
+  TupleDefinition
+    = "(" TypeDefinition "," NonemptyListOf<TypeDefinition, ","> ")" -- more
+    | "(" space* ")" -- unit
 
   UseDestructedName
     = identifier as identifier -- rename
