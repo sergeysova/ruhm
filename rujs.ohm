@@ -1,6 +1,6 @@
-ES5 {
+Base {
 
-  Program = &(Directive*) SourceElement*
+  Program = SourceElement*
 
   // §A.1 Lexical Grammar -- https://es5.github.io/#A.1
 
@@ -515,20 +515,14 @@ ES5 {
     | use UsePath "::" UseDestructuring sc -- named
     | use UsePath sc -- base
 
-  /*
-    Note: The Directive Prologue is the longest sequence of ExpressionStatement
-    productions occurring as the initial SourceElement (see https://es5.github.io/#x14.1)
-  */
-  FunctionBody = &(Directive*) SourceElement*
+  FunctionBody = SourceElement*
 
   SourceElement = Declaration | Statement
 
   // Broken out so es6 can override to include ConstDecl and LetDecl
   Declaration = FunctionDeclaration
-
-  Directive = stringLiteral #sc
 }
 
-ES5Lax <: ES5 {
+Rust <: Base {
   futureReservedWord := futureReservedWordLax
 }
