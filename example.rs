@@ -15,3 +15,12 @@ foo::bar()
 foo::bar::baz()
 ::bar::baz()
 super::foo()
+
+fn main(argv: Array<String>, argc: i32) -> i32 {
+}
+
+fn example(foo, bar) {
+}
+
+fn foo(bar: impl Bar) -> impl Baz {
+}

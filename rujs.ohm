@@ -296,6 +296,10 @@ Base {
     | super "::" (super "::")* identifier -- super
     | identifier "::" identifier -- simple
 
+  IdentifierPath
+    = PathExpression
+    | identifier
+
   MemberExpression
     = MemberExpression "[" Expression<withIn> "]"  -- arrayRefExp
     | MemberExpression "." identifierName -- property
@@ -418,6 +422,7 @@ Base {
     | StructStatement
     | ExternStatement
     | UseStatement
+    | FnStatement
 
   Block = "{" StatementList "}"
 
@@ -499,6 +504,28 @@ Base {
   FormalParameterList = ListOf<FormalParameter, ",">
 
   FormalParameter = identifier
+
+  FnStatement
+    = FnStatementHead "{" FunctionBody "}"
+
+  FnStatementHead
+    = fn identifier "(" FnParametersList ")" FnReturnType -- returnType
+    | fn identifier "(" FnParametersList ")" -- returnUnit
+
+  FnParametersList = ListOf<FnParameter, ",">
+
+  FnParameter
+    = identifier ":" TypeDefinition -- typePath
+    | identifier ":" impl TypeDefinition -- implTrait
+    | identifier -- noType
+
+  FnReturnType
+    = "->" TypeDefinition -- simple
+    | "->" impl TypeDefinition -- impl
+
+  TypeDefinition
+    = IdentifierPath "<" ListOf<TypeDefinition, ","> ">" -- generic
+    | IdentifierPath
 
   UseDestructedName
     = identifier as identifier -- rename
