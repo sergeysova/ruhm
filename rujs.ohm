@@ -1,9 +1,6 @@
 Base {
 
   Program = SourceElement*
-
-  // §A.1 Lexical Grammar -- https://es5.github.io/#A.1
-
   /*
     Note: the following lexical conventions (see https://es5.github.io/#x7)
     are not implemented in this parser.
@@ -555,6 +552,6 @@ Base {
   Declaration = FunctionDeclaration
 }
 
-Rust <: Base {
+TLang <: Base {
   futureReservedWord := futureReservedWordLax
 }
